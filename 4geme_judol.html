@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Koin Anezz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #ffffff 0%, #f5e6ff 50%, #ffd6e6 100%);
+      text-align: center;
+      min-height: 100vh;
+    }
+    .container {
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+      border-radius: 15px;
+      margin: 20px;
+      box-shadow: 0 4px 15px rgba(102, 0, 153, 0.2);
+      border: 1px solid #e0ccff;
+    }
+    input, button {
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 12px;
+      border: none;
+      margin: 10px;
+      width: 80%;
+      max-width: 300px;
+    }
+    #coinDisplay {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(to right, #cc00cc, #9900cc);
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 2px 8px rgba(153, 0, 204, 0.4);
+      display: none;
+    }
+    .emoji-box {
+      font-size: 40px;
+      margin: 20px;
+      background: rgba(255, 0, 102, 0.1);
+      padding: 15px;
+      border-radius: 10px;
+      border: 2px dashed #ff0066;
+    }
+    .menu-item {
+      background: rgba(204, 0, 204, 0.1);
+      border: 2px solid #cc00cc;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 15px;
+    }
+    .hidden { display: none; }
+    button {
+      background: linear-gradient(to right, #cc00cc, #9900cc);
+      color: white;
+      font-weight: bold;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+    button:hover {
+      background: linear-gradient(to right, #ff0066, #cc00cc);
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(204, 0, 153, 0.3);
+    }
+    h2, h3 {
+      color: #660099;
+      text-shadow: 1px 1px 2px rgba(204, 153, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+
+<div id="coinDisplay">Koin: <span id="coin">0</span></div>
+
+<!-- GAME PAGE -->
+<div id="gamePage" class="container">
+  <h2>Selamat Datang di Game Anezz 🎉</h2>
+  <p>Kamu mendapatkan 10000 koin untuk bermain</p>
+  <p>Setiap main -30 koin</p>
+  <p>kalo coin abis tinggal refresh 👍</p>
+
+  <div class="emoji-box" id="slot">🎰🎰🎰</div>
+
+  <button onclick="playGame()">HYU BERMAIN</button>
+  <br>
+  <button onclick="goToExchange()">TUKAR KAN KOIN ANDA</button>
+</div>
+
+<!-- EXCHANGE PAGE -->
+<div id="exchangePage" class="container hidden">
+
+  <h3>Tukar Koin Kamu 🎁</h3>
+  <input type="text" id="phone" placeholder="kasih kata kata mutiara">
+
+  <div class="menu-item">
+    9999999999 koin = APK BUG WHATSAPP<br>
+    <button onclick="exchange(9999999999)">HYU TUKER</button>
+  </div>
+
+  <div id="linkBox" class="hidden" style="margin-top: 20px;">
+    <a href="apk chat tele admin ya t.me/anezzz1" 
+       style="display:inline-block; padding:10px 20px; background:#cc00cc; color:white; 
+       font-weight:bold; text-decoration:none; border-radius:10px; box-shadow:0 3px 6px rgba(0,0,0,0.2);">
+       TEKAN TOMBOL INI
+    </a>
+  </div>
+
+  <!-- TOMBOL KEMBALI DI BAWAH -->
+  <button onclick="backToGame()" 
+    style="background:#9900cc; color:white; padding:12px; width:90%; max-width:300px;
+    border-radius:12px; font-weight:bold; margin-top:25px;">
+    KEMBALI KE GAME
+  </button>
+
+</div>
+
+<script>
+  let coin = 10000;
+  const slot = document.getElementById("slot");
+  const emojis = ["💎","💰","💸","🪙","🥵","🤑","🤯","💷","💶","💵","💴","💳","🎰","🗿","😭","😂","💹","😀","🥰","🙂","🤪","🥴","😬","🥱","🤨","😤","😰","🤯","😵‍💫","🤡"];
+  const coinDisplay = document.getElementById("coinDisplay");
+
+  updateCoin();
+  coinDisplay.style.display = "block";
+
+  function playGame() {
+    if (coin < 30) {
+      alert("Koin kamu tidak cukup 😒");
+      return;
+    }
+    coin -= 30;
+
+    const e1 = emojis[Math.floor(Math.random() * emojis.length)];
+    const e2 = emojis[Math.floor(Math.random() * emojis.length)];
+    const e3 = emojis[Math.floor(Math.random() * emojis.length)];
+
+    slot.textContent = `${e1}${e2}${e3}`;
+
+    if (e1 === e2 && e2 === e3) {
+      coin += 99999999999;
+      alert("SELAMAT ANDA ORANG TERHOKI SEDUNIA 🎉 HADIAH +99999999999 COIN!");
+    }
+    updateCoin();
+  }
+
+  function updateCoin() {
+    document.getElementById("coin").textContent = coin;
+  }
+
+  function goToExchange() {
+    document.getElementById("gamePage").classList.add("hidden");
+    document.getElementById("exchangePage").classList.remove("hidden");
+  }
+
+  function backToGame() {
+    document.getElementById("exchangePage").classList.add("hidden");
+    document.getElementById("gamePage").classList.remove("hidden");
+  }
+
+  function exchange(amount) {
+    const phone = document.getElementById("phone").value;
+    if (!phone) {
+      alert("MASUKAN KATA KATA DULU");
+      return;
+    }
+    if (coin >= amount) {
+      coin -= amount;
+      updateCoin();
+      alert(`Berhasil ditukar! makasih kata kata nya: ${phone} https://anezz001.github.io/web-unbend-100-work/unbend.html`);
+      document.getElementById("linkBox").classList.remove("hidden");
+    } else {
+      alert("Koin tidak cukup 💹");
+    }
+  }
+</script>
+
+</body>
+</html>
